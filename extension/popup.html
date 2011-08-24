@@ -1,0 +1,53 @@
+<style>
+body {
+  min-width:357px;
+}
+
+#background {
+	z-index: 4;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#foreground {
+	z-index: 5;
+	background-color: #ffffff;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	font-size: 0.8em;
+}
+</style>
+
+<script>
+chrome.tabs.getSelected(window.id, function(tab) {
+  console.log("send: " + tab.id);
+  chrome.tabs.sendRequest(tab.id, {}, 
+  	function(response) {
+  		var content = document.getElementById('content');
+  		content.value = response.content;
+		content.select();
+		content.focus();
+		document.execCommand("Copy");
+
+  		var foreground = document.getElementById('foreground');
+		foreground.appendChild(document.createTextNode("Text has been copied to your clipboard."));
+		
+		setInterval(function() {
+			clearInterval();
+			window.close();
+		}, 1000 * 3);
+	});
+	});
+</script>
+
+<div id="background">
+<textarea id="content">
+</textarea>
+</div>
+<div id="foreground">
+</div>

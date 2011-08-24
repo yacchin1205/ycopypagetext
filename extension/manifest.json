@@ -1,0 +1,18 @@
+{
+  "name": "CopyPageText Extension",
+  "version": "0.1",
+  "description": "An extension which copies text included in the current page to the clipboard.",
+  "browser_action": {
+    "default_icon": "page_copy.png",
+    "popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["traverser.js"]
+    }
+  ],
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ]
+}
